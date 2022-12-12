@@ -19,8 +19,9 @@ categories = ["compression", "api-bindings"]
 futures = { version = "0.3.21", optional = true }
 lzip-sys = { version = "0.1.1", path = "lzip-sys" }
 tokio-io = { version = "0.1.13", optional = true }
+lzma-sys = "*"
 
-[dev-dependencies]
+quickcheck = "*"
 rand = "0.8.5"
 
 [features]

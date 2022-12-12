@@ -201,10 +201,11 @@ impl<R: AsyncWrite + Read> AsyncWrite for LzDecoder<R> {
 
 #[cfg(test)]
 mod tests {
-    use rand::{thread_rng, Rng};
+    extern crate quickcheck;
+    extern crate rand;
+    use self::rand::{distributions::Standard, thread_rng, Rng};
     use read::{LzDecoder, LzEncoder};
     use std::io::prelude::*;
-    use std::iter;
 
     #[test]
     fn smoke() {
@@ -291,7 +292,7 @@ mod tests {
 
     #[test]
     fn qc() {
-        ::quickcheck::quickcheck(test as fn(_) -> _);
+        quickcheck::quickcheck(test as fn(_) -> _);
 
         fn test(v: Vec<u8>) -> bool {
             let r = LzEncoder::new(&v[..], 6);
