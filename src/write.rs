@@ -16,7 +16,6 @@ pub struct LzEncoder<W: Write> {
     data: Stream,
     obj: Option<W>,
     buf: Vec<u8>,
-    done: bool,
 }
 
 /// A compression stream which will have compressed data written to it and
@@ -25,7 +24,6 @@ pub struct LzDecoder<W: Write> {
     data: Stream,
     obj: Option<W>,
     buf: Vec<u8>,
-    done: bool,
 }
 
 impl<W: Write> LzEncoder<W> {
@@ -43,7 +41,6 @@ impl<W: Write> LzEncoder<W> {
             data: stream,
             obj: Some(obj),
             buf: Vec::with_capacity(32 * 1024),
-            done: false,
         }
     }
 
@@ -203,7 +200,6 @@ impl<W: Write> LzDecoder<W> {
             data: stream,
             obj: Some(obj),
             buf: Vec::with_capacity(32 * 1024),
-            done: false,
         }
     }
 
@@ -365,7 +361,7 @@ mod tests {
 
     #[test]
     fn qc() {
-        ::quickcheck::quickcheck(test as fn(_) -> _);
+        quickcheck::quickcheck(test as fn(_) -> _);
 
         fn test(v: Vec<u8>) -> bool {
             let w = LzDecoder::new(Vec::new());
